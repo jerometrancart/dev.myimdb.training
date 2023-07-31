@@ -9,15 +9,24 @@ class MovieController extends Controller
 {
     public function index(Request $request, $genre)
     {
-        $html = "List of movies with genre : <strong>{$genre}</strong><br/>";
+        if ($request->is('movies/list/genre/*'))
+        {
+            $html = "List of movies with genre : <strong>{$genre}</strong><br/>";
+        }
 
         $html .= "
-        <ul>
-            <li>Halloween</li>
-            <li>Jaw</li>
-        </ul>";
+            <ul>
+                <li>Halloween</li>
+                <li>Jaw</li>
+            </ul>";
 
-        $html .='Uri :'.$request->path();
+        $html .= "<b>Current method: </b>". $request->method() . "<br><br>";
+
+        if (!$request->isMethod('POST'))
+        {
+            $html .= "<b>Current method is not POST </b>";
+        }
+
         $response =new \Illuminate\Http\Response($html);
         return $response;
     }//
