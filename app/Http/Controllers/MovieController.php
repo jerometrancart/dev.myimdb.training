@@ -27,6 +27,11 @@ class MovieController extends Controller
             $html .= "<b>Current method is not POST </b>";
         }
 
+        $headers['accept'] =$request->headers->get('Accept');
+        $headers['cacheControl'] =$request->headers->get('Cache-Control');
+
+        $html .= "<br/><br/><b>Headers<br/>:".json_encode($headers);
+
         $response =new \Illuminate\Http\Response($html);
         return $response;
     }//
