@@ -17,28 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/movies/halloween', function(){
-    return 'Movie title: Halloween';
-})->name('show_movie');
 
-Route::post('movies/create', function (){
-
-})->name('create_movie');
-
-Route::put('movies/halloween', function (){
-
-})->name('update_movie');
-
-Route::delete('movies/halloween', function (){
-
-})->name('delete_movie');
-
-Route::any('movies/', function (){
-
-});
-
-Route::match(['get', 'post'],'movies/', function (){
-
-});
+Route::prefix('movies')
+    ->name('movies.')
+    ->group(function () {
+        Route::get('list/genre/{genre}', [\App\Http\Controllers\MovieController::class, 'index'])->name('list');
+    });
 
 
