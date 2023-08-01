@@ -4,6 +4,13 @@
     <body>
         List of movies  :
         <hr>
+        @if (isset($age))
+            <b>You have {{ $age }} years old</b>
+        @else
+            <b>You have not indicated your age</b>
+        @endif
+
+        <br>
         <p> Loop for</p>
         <ul>
             @for ($i = 0; $i < count($movies); $i++)
@@ -29,7 +36,7 @@
                     <li>No movies</li>
             @endforelse
         </ul>
-
+        {{-- This is a comment --}}
         <p>Loop while</p>
         <ul>
             @php $i = 0 @endphp
@@ -45,11 +52,12 @@
                     @if ($loop->first)
                         this is the first movie -->
                     @endif
-                    
+
                         {{ $movie['title'] .',  '.$movie['year'] }}
                     @if ($loop->last)
                         <-- this is the last movie
                     @endif
+
                 </li>
             @endforeach
 
