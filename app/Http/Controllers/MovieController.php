@@ -21,14 +21,14 @@ class MovieController extends Controller
             ]
         ];
 
-        //call view 'index' and transmit movies to view
-        return response()
-            ->view('index', [
-                'movies' => $movies
-            ])
-            ->header('X-HEADER-ONE', 'Value 1')
-            ->header('X-HEADER-TWO', 'Value 2')
-            ;
-    }
+        $genre ='action';
 
+        //age of user
+        $age = "25";
+
+        //call view 'index' and transmit movies to view
+        return view( 'backoffice.movies.index', compact('movies', 'genre', 'age'));
+    }
 }
+
+
