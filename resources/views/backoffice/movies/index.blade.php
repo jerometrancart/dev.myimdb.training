@@ -4,16 +4,26 @@
 
 @section('sidebar')
     @parent
-    This is index sidebar appended to the master sidebar
-    <hr>
 @endsection
 
 @section('content')
-    List of movies :
-    {{-- Loop through movies --}}
-    <ul>
-        @foreach( $movies as $movie)
-            <li>{{ $movie['title'] .', '.$movie['year'] }}</li>
-        @endforeach
-    </ul>
+
+@section('main_title', 'List of movies')
+<table class="table table-striped table-sm">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Year</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach( $movies as $movie )
+        <tr>
+            <td>{{ $movie['title'] }}</td>
+            <td>{{ $movie['year'] }}</td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+
 @endsection
