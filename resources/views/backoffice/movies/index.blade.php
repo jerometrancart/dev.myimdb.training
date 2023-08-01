@@ -2,25 +2,56 @@
 <title>List of movies</title>
 
     <body>
-        List of movies with genre {{ $genre }}  :
+        List of movies  :
+        <hr>
+        <p> Loop for</p>
         <ul>
-            @if($age < 18)
-                <p> You have {{ $age }} years old, you are not allowed to see this list of movies</p>
-            @else
-                Number of movies:
-                    @if (count($movies) == 1)
-                    One movie
-                    @elseif (count($movies) >= 1)
-                    {{ count($movies) }} movies
-                    @else
-                    No movies
-                    @endif
-                <br />
-                <br />
-                @foreach( $movies as $movie)
-                    <li>{{ strtoupper($movie['title']) .',  '.$movie['year'] }}</li>
-                @endforeach
-            @endif
+            @for ($i = 0; $i < count($movies); $i++)
+                <li>{{ $movies[$i]['title'] .',  '.$movies[$i]['year'] }}</li>
+            @endfor
         </ul>
+        <hr>
+
+        <p>Loop foreach</p>
+        <ul>
+
+            @foreach( $movies as $movie)
+                <li>{{ $movie['title'] .',  '.$movie['year'] }}</li>
+            @endforeach
+        </ul>
+
+        <p>Loop forelse</p>
+        <ul>
+
+            @forelse( $movies as $movie)
+                <li>{{ $movie['title'] .',  '.$movie['year'] }}</li>
+            @empty
+                    <li>No movies</li>
+            @endforelse
+        </ul>
+
+        <p>Loop while</p>
+        <ul>
+            @php $i = 0 @endphp
+            @while( $i < count($movies))
+                <li>{{ $movies[$i]['title'] .',  '.$movies[$i]['year'] }}</li>
+                @php $i++ @endphp
+            @endwhile
+        </ul>
+
+        <p>Loop foreach with loop variable</p>
+            @foreach( $movies as $movie)
+                <li>
+                    @if ($loop->first)
+                        this is the first movie -->
+                    @endif
+                    
+                        {{ $movie['title'] .',  '.$movie['year'] }}
+                    @if ($loop->last)
+                        <-- this is the last movie
+                    @endif
+                </li>
+            @endforeach
+
     </body>
 </html>
