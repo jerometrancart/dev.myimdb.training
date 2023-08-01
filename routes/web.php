@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('backoffice')
     ->name('backoffice.')
     ->group(function () {
+        Route::get('/', function() {
+            return view('backoffice.homepage');
+        })->name('homepage');
         Route::prefix('movies')
             ->name('movies.')
             ->group(function () {
