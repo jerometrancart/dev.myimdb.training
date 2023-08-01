@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('movies')
-    ->name('movies.')
+Route::prefix('backoffice')
+    ->name('backoffice.')
     ->group(function () {
-        Route::get('list', [\App\Http\Controllers\MovieController::class, 'index'])->name('list');
+        Route::prefix('movies')
+            ->name('movies.')
+            ->group(function () {
+                Route::get('/', [\App\Http\Controllers\Backoffice\MovieController::class,'index'])->name('index');
+            });
     });
 
 Route::get('/login', function () {

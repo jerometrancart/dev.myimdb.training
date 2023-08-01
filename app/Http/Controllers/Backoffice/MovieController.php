@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backoffice;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -29,13 +30,11 @@ class MovieController extends Controller
                 'year'=> 1973
             ],
         ];
-        $genre ='action';
 
-        //age of user
-        $age = "15";
 
         //call view 'index' and transmit movies to view
-        return view( 'backoffice.movies.index', compact('movies', 'genre', 'age'));
+        return view( 'backoffice.movies.index',
+            compact('movies' ));
     }
 }
 

@@ -11,8 +11,16 @@
 
         @section('sidebar')
             <hr>
-            This is the master sidebar
+            @include('backoffice.partials._menu',[
+                'items' => [
+                    [
+                        'link' => route('backoffice.movies.index'),
+                        'title' => 'Movies'
+                    ]
+                ]
+            ])
             <hr>
+
         @show
 
         @yield('content')
