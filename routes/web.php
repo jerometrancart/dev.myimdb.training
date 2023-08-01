@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::prefix('movies')
     ->name('movies.')
     ->group(function () {
-        Route::get('list/genre/{genre}', [\App\Http\Controllers\MovieController::class, 'index'])->name('list');
+        Route::get('list', [\App\Http\Controllers\MovieController::class, 'index'])->name('list');
     });
 
 

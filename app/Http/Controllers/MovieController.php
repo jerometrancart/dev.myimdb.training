@@ -7,32 +7,21 @@ use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
-    public function index(Request $request, $genre)
+    public function index()
     {
-        if ($request->is('movies/list/genre/*'))
-        {
-            $html = "List of movies with genre : <strong>{$genre}</strong><br/>";
-        }
-
-        $html .= "
-            <ul>
-                <li>Halloween</li>
-                <li>Jaw</li>
-            </ul>";
-
-        $html .= "<b>Current method: </b>". $request->method() . "<br><br>";
-
-        if (!$request->isMethod('POST'))
-        {
-            $html .= "<b>Current method is not POST </b>";
-        }
-
-        $headers['accept'] =$request->headers->get('Accept');
-        $headers['cacheControl'] =$request->headers->get('Cache-Control');
-
-        $html .= "<br/><br/><b>Headers<br/>:".json_encode($headers);
-
-        $response =new \Illuminate\Http\Response($html);
-        return $response;
+        //store movies list in array
+        $movies = [
+            [
+                'title' => 'Halloween',
+                'year' => 1978
+            ],
+            [
+                'title' => 'Jaw',
+                'year' => 1975
+            ]
+        ];
+        return response()->view('index', [
+            'movies' => $movies
+        ]);
     }//
 }
