@@ -35,7 +35,7 @@ class MovieController extends Controller
         $age = "15";
 
         //call view 'index' and transmit movies to view
-        return view( 'backoffice.movies.index', compact('movies', 'genre'));
+        return view( 'backoffice.movies.index', compact('movies', 'genre', 'age'));
     }
 }
 
