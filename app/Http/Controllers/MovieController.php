@@ -12,16 +12,23 @@ class MovieController extends Controller
         //store movies list in array
         $movies = [
             [
-                'title' => 'Halloween',
-                'year' => 1978
+            'title' => 'Halloween',
+            'year' => 1978
             ],
             [
                 'title' => 'Jaw',
                 'year' => 1975
             ]
         ];
-        return response()->view('index', [
-            'movies' => $movies
-        ]);
-    }//
+
+        //call view 'index' and transmit movies to view
+        return response()
+            ->view('index', [
+                'movies' => $movies
+            ])
+            ->header('X-HEADER-ONE', 'Value 1')
+            ->header('X-HEADER-TWO', 'Value 2')
+            ;
+    }
+
 }
