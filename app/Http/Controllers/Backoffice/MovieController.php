@@ -27,6 +27,13 @@ class MovieController extends Controller
         return view('backoffice.movies.show',
         compact('movie'));
     }
+    public function edit($id)
+    {
+        $movie = $this->getMovie($id);
+
+        return view('backoffice.movies.edit',
+        compact('movie'));
+    }
     public function getMovies()
     {
         //store movies list in array

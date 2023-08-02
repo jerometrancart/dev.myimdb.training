@@ -35,6 +35,7 @@
             <td>
                 <ul class="list-inline list-unstyled">
                     <li class="list-inline-item"><a href="{{ route('backoffice.movies.show', ['id' =>$movie['id']]) }}">Show</a></li>
+                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.edit', ['id' =>$movie['id']]) }}">Edit</a></li>
                 </ul>
             </td>
         </tr>

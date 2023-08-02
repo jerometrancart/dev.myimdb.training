@@ -24,6 +24,7 @@ Route::prefix('backoffice')
             ->group(function () {
                 Route::get('/', [\App\Http\Controllers\Backoffice\MovieController::class,'index'])->name('index');
                 Route::get('show/{id}', [\App\Http\Controllers\Backoffice\MovieController::class,'show'])->name('show');
+                Route::get('edit/{id}', [\App\Http\Controllers\Backoffice\MovieController::class,'edit'])->name('edit');
             });
     });
 
