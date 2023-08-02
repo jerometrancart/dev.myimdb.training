@@ -12,5 +12,8 @@
 
 @include('backoffice.movies.partials._form')
 
+<ul class="list-inline list-unstyled mt-5">
+    <a href="{{ route('backoffice.movies.index') }}" class="btn btn-outline-secondary btn-sm ">Back to list</a>
+</ul>
 
 @endsection

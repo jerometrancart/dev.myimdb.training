@@ -18,6 +18,11 @@
     <button type="submit" value="delete" class="btn btn-primary">Delete</button>
 </form>
 
+<ul class="list-inline list-unstyled mt-5">
+    <a href="{{ route('backoffice.movies.show', ['id' =>$movie['id']]) }}" class="btn btn-outline-secondary btn-sm">Show</a>
+    <a href="{{ route('backoffice.movies.edit', ['id' =>$movie['id']]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
+    <a href="{{ route('backoffice.movies.index') }}" class="btn btn-outline-secondary btn-sm ">Back to list</a>
+</ul>
 @endsection
 
 

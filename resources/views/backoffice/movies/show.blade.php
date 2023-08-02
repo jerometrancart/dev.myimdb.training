@@ -44,10 +44,15 @@
         <th class="w-25">Updated at</th>
         <td>{{ $movie['updated_at']->format('d/m/Y') }}</td>
     </tr>
-
     </tbody>
 
 </table>
+
+<ul class="list-inline list-unstyled mt-5">
+    <a href="{{ route('backoffice.movies.edit', ['id' =>$movie['id']]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
+    <a href="{{ route('backoffice.movies.delete', ['id' =>$movie['id']]) }}" class="btn btn-outline-secondary btn-sm">Delete</a>
+    <a href="{{ route('backoffice.movies.index') }}" class="btn btn-outline-secondary btn-sm ">Back to list</a>
+</ul>
 
 @endsection
 
