@@ -38,6 +38,15 @@ class MovieController extends Controller
     {
         return view('backoffice.movies.create');
     }
+
+    public function delete($id)
+    {
+        $movie = $this->getMovie($id);
+
+        return view('backoffice.movies.delete',
+            compact('movie'));
+
+    }
     public function getMovies()
     {
         //store movies list in array

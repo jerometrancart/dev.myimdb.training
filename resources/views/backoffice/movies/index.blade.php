@@ -36,6 +36,7 @@
                 <ul class="list-inline list-unstyled">
                     <li class="list-inline-item"><a href="{{ route('backoffice.movies.show', ['id' =>$movie['id']]) }}">Show</a></li>
                     <li class="list-inline-item"><a href="{{ route('backoffice.movies.edit', ['id' =>$movie['id']]) }}">Edit</a></li>
+                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.delete', ['id' =>$movie['id']]) }}">Delete</a></li>
                 </ul>
             </td>
         </tr>
@@ -43,7 +44,7 @@
     </tbody>
 </table>
 <ul class="list-inline list-unstyled">
-    <a href="{{ route('backoffice.movies.create', ['id' =>$movie['id']]) }}">Add</a>
+    <a href="{{ route('backoffice.movies.create') }}" class="btn btn-primary btn-sm">Add</a>
 </ul>
 
 @endsection
