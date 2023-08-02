@@ -10,7 +10,7 @@
 
 @section('main_title', 'Edit a movie : '.$movie['title'].' ('.$movie['year'].') ')
 
-<form action="">
+<form>
     <div class="mb-3">
         <label for="title" class="form-label fw-bold fs-6"></label>
         <input type="text" class="form-control" id="title" value="{{ $movie['title'] }}">

@@ -42,5 +42,8 @@
     @endforeach
     </tbody>
 </table>
+<ul class="list-inline list-unstyled">
+    <a href="{{ route('backoffice.movies.create', ['id' =>$movie['id']]) }}">Add</a>
+</ul>
 
 @endsection

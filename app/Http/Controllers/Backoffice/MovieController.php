@@ -34,6 +34,10 @@ class MovieController extends Controller
         return view('backoffice.movies.edit',
         compact('movie'));
     }
+    public function create()
+    {
+        return view('backoffice.movies.create');
+    }
     public function getMovies()
     {
         //store movies list in array
