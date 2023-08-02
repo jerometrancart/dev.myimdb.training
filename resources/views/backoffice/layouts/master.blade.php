@@ -31,6 +31,10 @@
                         @include('backoffice.partials._menu',[
                             'items' => [
                                 [
+                                    'link' => route('backoffice.homepage'),
+                                    'title' => 'Homepage'
+                                ],
+                                [
                                     'link' => route('backoffice.movies.index'),
                                     'title' => 'List of movies'
                                 ]
