@@ -22,16 +22,19 @@ Route::prefix('backoffice')
         Route::prefix('movies')
             ->name('movies.')
             ->group(function () {
-                Route::get('/', [\App\Http\Controllers\Backoffice\MovieController::class,'index'])->name('index');
-                Route::get('show/{id}', [\App\Http\Controllers\Backoffice\MovieController::class,'show'])->name('show');
-                Route::get('edit/{id}', [\App\Http\Controllers\Backoffice\MovieController::class,'edit'])->name('edit');
-                Route::get('create', [\App\Http\Controllers\Backoffice\MovieController::class,'create'])->name('create');
-                Route::get('delete/{id}', [\App\Http\Controllers\Backoffice\MovieController::class,'delete'])->name('delete');
-            });
-    });
 
-Route::get('/login', function () {
-    return "Hello ".request()->get('name')." , Authentication is required ! Please log in !";
-})->name('login');
+                Route::get('/',[\App\Http\Controllers\Backoffice\MovieController::class,'index'])->name('index');
+
+                Route::get('show/{id}',[\App\Http\Controllers\Backoffice\MovieController::class,'show'])->name('show');
+
+                Route::get('edit/{id}',[\App\Http\Controllers\Backoffice\MovieController::class,'edit'])->name('edit');
+
+                Route::get('create',[\App\Http\Controllers\Backoffice\MovieController::class,'create'])->name('create');
+
+                Route::get('delete/{id}',[\App\Http\Controllers\Backoffice\MovieController::class,'delete'])->name('delete');
+            });
+
+        Route::get('database-query-builder',[\App\Http\Controllers\Backoffice\DatabaseQueryBuilderController::class,'index'])->name('database.query.builder');
+    });
 
 

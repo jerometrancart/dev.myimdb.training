@@ -31,6 +31,10 @@
                         @include('backoffice.partials._menu',[
                             'items' => [
                                 [
+                                    'link' => route('backoffice.database.query.builder'),
+                                    'title' => 'Database QueryBuilder'
+                                ],
+                                [
                                     'link' => route('backoffice.homepage'),
                                     'title' => 'Homepage'
                                 ],
