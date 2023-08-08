@@ -8,7 +8,7 @@
 
 @section('content')
 
-    @section('main_title','Database QueryBbuilder')
+    @section('main_title','Database QueryBuilder')
 
     <div class="row">
         <div class="col-3">
