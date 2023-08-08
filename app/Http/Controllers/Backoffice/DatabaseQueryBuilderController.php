@@ -76,58 +76,39 @@ class DatabaseQueryBuilderController extends Controller
      */
     public function getGenericQuery()
     {
-        //equal
+        //inner join clause
         $query = DB::table('movies')
-            ->select('movies.title','movies.rating')
-            ->where('rating', '=', 8)
-            ->limit(2);
-        $movies = $query->get();
-
-        $result['equal']['title'] = 'Get movies with rating = 8';
-        $result['equal']['sql'] = $query->toSql();
-        $result['equal']['type'] = get_debug_type($movies);
-        $result['equal']['data'] = $movies;
-
-        //granter than
-        $query = DB::table('movies')
-            ->select('movies.title','movies.rating')
-            ->where('rating', '>=', 8)
+            ->join('movies_genres', 'movies.id', 'movies_genres.movie_id')
+            ->join('genres', 'genres.id', 'movies_genres.genre_id')
+            ->select('movies.title', 'genres.name as genre_name')
             ->limit(5);
         $movies = $query->get();
 
-        $result['granter_than']['title'] = 'Get movies with rating >= 8';
-        $result['granter_than']['sql'] = $query->toSql();
-        $result['granter_than']['type'] = get_debug_type($movies);
-        $result['granter_than']['data'] = $movies;
+        $result['inner_join']['title'] = 'Get movies with release dates';
+        $result['inner_join']['sql'] = $query->toSql();
+        $result['inner_join']['type'] = get_debug_type($movies);
+        $result['inner_join']['data'] = $movies;
 
-        //like
-        $query = DB::table('movies')
-            ->select('movies.title','movies.rating')
-            ->where('title', 'like', 'The%')
-            ->limit(5);
+
+
+        //advanced join clause
+        $query = DB::table('movies');
+        $query->select('movies.title', 'genres.name as genre_name');
+        $query->join('movies_genres', 'movies.id', 'movies_genres.movie_id');
+        $query->join('genres',function(JoinClause $join)
+            {
+                $join->on('genres.id', '=', 'movies_genres.genre_id')
+                    ->where('genres.name', '=', 'Adventure');
+            })->limit(5);
+
         $movies = $query->get();
 
-        $result['like']['title'] = 'Get movies with title contains \'The\'';
-        $result['like']['sql'] = $query->toSql();
-        $result['like']['type'] = get_debug_type($movies);
-        $result['like']['data'] = $movies;
+        $result['left_join']['title'] = 'Get movies with genre = Adventure';
+        $result['left_join']['sql'] = $query->toSql();
+        $result['left_join']['type'] = get_debug_type($movies);
+        $result['left_join']['data'] = $movies;
 
-        //array of conditions
-        $query = DB::table('movies')
-            ->select('movies.title','movies.rating')
-            ->where([
-                ['title','like','%father%'],
-                ['rating','>=','8']
-            ])
-            ->limit(5);
-        $movies = $query->get();
-
-        $result['like_and_conditions']['title'] = 'Get movies with title contains \'father\' and granter than 8';
-        $result['like_and_conditions']['sql'] = $query->toSql();
-        $result['like_and_conditions']['type'] = get_debug_type($movies);
-        $result['like_and_conditions']['date'] = $movies;
-
-        return ['title' => 'Where Clauses', 'method' => 'getWhereClauses()', 'result' => $result];
+        return ['title' => 'Joins', 'method' => 'getJoins()', 'result' => $result];
     }
 
 
