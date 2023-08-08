@@ -76,37 +76,29 @@ class DatabaseQueryBuilderController extends Controller
      */
     public function getGenericQuery()
     {
-        //inner join clause
+        //insert
+
+        $created_at = new \DateTime();
+        $created_at = $created_at->format('Y-m-d H:i:s');
+
+        DB::table('movies')->where('title', '=', 'Enter the Dragon')->delete();
+        DB::table('movies')->insert(
+            [
+                'title' => 'Enter the Dragon',
+                'year' => 1973,
+                'running_time' => 102,
+                'rating' => 7.7,
+                'synopsis' => 'A martial artist agrees to spy on a reclusive crime lord using his invitation to a tournament',
+                'created_at' => $created_at
+            ]);
+
         $query = DB::table('movies')
-            ->join('movies_genres', 'movies.id', 'movies_genres.movie_id')
-            ->join('genres', 'genres.id', 'movies_genres.genre_id')
-            ->select('movies.title', 'genres.name as genre_name')
-            ->limit(5);
-        $movies = $query->get();
+            ->select('id', 'title', 'rating', 'created_at')
+            ->orderBy('id', 'desc')
+            ->limit(1);
 
-        $result['inner_join']['title'] = 'Get movies with release dates';
-        $result['inner_join']['sql'] = $query->toSql();
-        $result['inner_join']['type'] = get_debug_type($movies);
-        $result['inner_join']['data'] = $movies;
-
-
-
-        //advanced join clause
-        $query = DB::table('movies');
-        $query->select('movies.title', 'genres.name as genre_name');
-        $query->join('movies_genres', 'movies.id', 'movies_genres.movie_id');
-        $query->join('genres',function(JoinClause $join)
-            {
-                $join->on('genres.id', '=', 'movies_genres.genre_id')
-                    ->where('genres.name', '=', 'Adventure');
-            })->limit(5);
-
-        $movies = $query->get();
-
-        $result['left_join']['title'] = 'Get movies with genre = Adventure';
-        $result['left_join']['sql'] = $query->toSql();
-        $result['left_join']['type'] = get_debug_type($movies);
-        $result['left_join']['data'] = $movies;
+        $result['insert']['title'] = 'Insert Movie : Enter the Dragon (1973)';
+        $result['insert']['data'] = $query->get();
 
         return ['title' => 'Joins', 'method' => 'getJoins()', 'result' => $result];
     }
