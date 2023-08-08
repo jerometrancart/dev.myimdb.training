@@ -76,58 +76,37 @@ class DatabaseQueryBuilderController extends Controller
      */
     public function getGenericQuery()
     {
-
-
-
-
+        //select
         $query = DB::table('movies');
-        //pluck
-        $movies = $query->pluck('title','id');
+        $query->select('id', 'title', 'year');
+        $query->limit(5);
+        $movies = $query->get();
 
-        $result['list_of_col_values_with_key']['title'] = 'Retrieving a list of column values with key';
-        $result['list_of_col_values_with_key']['sql'] = $query->toSql();
-        $result['list_of_col_values']['type'] = get_debug_type($movies);
-        $result['list_of_col_values_with_key']['data'] = $movies;
+        $result['columns']['title'] = 'Get movies with id, title, year';
+        $result['columns']['sql'] = $query->toSql();
+        $result['columns']['type'] = get_debug_type($movies);
+        $result['columns']['data'] = $movies;
 
-        //count
-        $data = $query->count();
-        $result['count']['title'] = 'get number of movies';
-        $result['count']['sql'] = $query->toSql();
-        $result['count']['type'] = get_debug_type($data);
-        $result['count']['data']  = $data;
+        //distinct
+        $query = DB::table('movies');
+        $query->select('id', 'title', 'year')->distinct();
+        $query->limit(5);
+        $movies = $query->get();
 
-        //max
-        $data = $query->max('rating');
-        $result['max']['title'] = 'get max rating of movies';
-        $result['max']['sql'] = $query->toSql();
-        $result['max']['type'] = get_debug_type($data);
-        $result['max']['data']  = $data;
+        $result['distinct']['title'] = 'Get distinct movies with id, title, year';
+        $result['distinct']['sql'] = $query->toSql();
+        $result['distinct']['type'] = get_debug_type($movies);
+        $result['distinct']['data'] = $movies;
 
-        //min
-        $data = $query->min('rating');
-        $result['min']['title'] = 'get min rating of movies';
-        $result['min']['sql'] = $query->toSql();
-        $result['min']['type'] = get_debug_type($data);
-        $result['min']['data']  = $data;
+        //add select
+        $query = DB::table('movies');
+        $query->select('id', 'title', 'year');
+        $query->addSelect('rating');
+        $query->limit(5);
+        $movies = $query->get();
 
-        //avg
-        $data = $query->avg('rating');
-        $result['avg']['title'] = 'get avg rating of movies';
-        $result['avg']['sql'] = $query->toSql();
-        $result['avg']['type'] = get_debug_type($data);
-        $result['avg']['data']  = $data;
 
-        //avg with filter
-        $data = $query
-            ->where('year','>=', '1975')
-            ->avg('rating');
-
-        $result['avg_filter']['title'] = 'get avg rating of movies filter by year 1975';
-        $result['avg_filter']['sql'] = $query->toSql();
-        $result['avg_filter']['type'] = get_debug_type($data);
-        $result['avg_filter']['avg_filter']['data']  = $data;
-
-        return ['title' => 'Retrieving a list of column values with key', 'method' => 'getSingleRowById()', 'result' => $result];
+        return ['title' => 'Select', 'method' => 'getSelect()', 'result' => $result];
     }
 
 
