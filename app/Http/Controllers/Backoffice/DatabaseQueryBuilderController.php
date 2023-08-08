@@ -105,6 +105,11 @@ class DatabaseQueryBuilderController extends Controller
         $query->limit(5);
         $movies = $query->get();
 
+        $result['add_select']['title'] = 'Add a movie to selection';
+        $result['add_select']['sql'] = $query->toSql();
+        $result['add_select']['type'] = get_debug_type($movies);
+        $result['add_select']['data'] = $movies;
+
 
         return ['title' => 'Select', 'method' => 'getSelect()', 'result' => $result];
     }
