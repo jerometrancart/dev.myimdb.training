@@ -81,12 +81,51 @@ class DatabaseQueryBuilderController extends Controller
 
 
         $query = DB::table('movies');
+        //pluck
         $movies = $query->pluck('title','id');
 
-        $result['single_row']['title'] = 'Get all movies';
-        $result['single_row']['sql'] = $query->toSql();
-        $result['single_row']['type'] = get_debug_type($movies);
-        $result['single_row']['data'] = $movies;
+        $result['list_of_col_values_with_key']['title'] = 'Retrieving a list of column values with key';
+        $result['list_of_col_values_with_key']['sql'] = $query->toSql();
+        $result['list_of_col_values']['type'] = get_debug_type($movies);
+        $result['list_of_col_values_with_key']['data'] = $movies;
+
+        //count
+        $data = $query->count();
+        $result['count']['title'] = 'get number of movies';
+        $result['count']['sql'] = $query->toSql();
+        $result['count']['type'] = get_debug_type($data);
+        $result['count']['data']  = $data;
+
+        //max
+        $data = $query->max('rating');
+        $result['max']['title'] = 'get max rating of movies';
+        $result['max']['sql'] = $query->toSql();
+        $result['max']['type'] = get_debug_type($data);
+        $result['max']['data']  = $data;
+
+        //min
+        $data = $query->min('rating');
+        $result['min']['title'] = 'get min rating of movies';
+        $result['min']['sql'] = $query->toSql();
+        $result['min']['type'] = get_debug_type($data);
+        $result['min']['data']  = $data;
+
+        //avg
+        $data = $query->avg('rating');
+        $result['avg']['title'] = 'get avg rating of movies';
+        $result['avg']['sql'] = $query->toSql();
+        $result['avg']['type'] = get_debug_type($data);
+        $result['avg']['data']  = $data;
+
+        //avg with filter
+        $data = $query
+            ->where('year','>=', '1975')
+            ->avg('rating');
+
+        $result['avg_filter']['title'] = 'get avg rating of movies filter by year 1975';
+        $result['avg_filter']['sql'] = $query->toSql();
+        $result['avg_filter']['type'] = get_debug_type($data);
+        $result['avg_filter']['avg_filter']['data']  = $data;
 
         return ['title' => 'Retrieving a list of column values with key', 'method' => 'getSingleRowById()', 'result' => $result];
     }
