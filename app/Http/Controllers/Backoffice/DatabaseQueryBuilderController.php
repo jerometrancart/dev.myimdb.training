@@ -76,42 +76,58 @@ class DatabaseQueryBuilderController extends Controller
      */
     public function getGenericQuery()
     {
-        //select
-        $query = DB::table('movies');
-        $query->select('id', 'title', 'year');
-        $query->limit(5);
+        //equal
+        $query = DB::table('movies')
+            ->select('movies.title','movies.rating')
+            ->where('rating', '=', 8)
+            ->limit(2);
         $movies = $query->get();
 
-        $result['columns']['title'] = 'Get movies with id, title, year';
-        $result['columns']['sql'] = $query->toSql();
-        $result['columns']['type'] = get_debug_type($movies);
-        $result['columns']['data'] = $movies;
+        $result['equal']['title'] = 'Get movies with rating = 8';
+        $result['equal']['sql'] = $query->toSql();
+        $result['equal']['type'] = get_debug_type($movies);
+        $result['equal']['data'] = $movies;
 
-        //distinct
-        $query = DB::table('movies');
-        $query->select('id', 'title', 'year')->distinct();
-        $query->limit(5);
+        //granter than
+        $query = DB::table('movies')
+            ->select('movies.title','movies.rating')
+            ->where('rating', '>=', 8)
+            ->limit(5);
         $movies = $query->get();
 
-        $result['distinct']['title'] = 'Get distinct movies with id, title, year';
-        $result['distinct']['sql'] = $query->toSql();
-        $result['distinct']['type'] = get_debug_type($movies);
-        $result['distinct']['data'] = $movies;
+        $result['granter_than']['title'] = 'Get movies with rating >= 8';
+        $result['granter_than']['sql'] = $query->toSql();
+        $result['granter_than']['type'] = get_debug_type($movies);
+        $result['granter_than']['data'] = $movies;
 
-        //add select
-        $query = DB::table('movies');
-        $query->select('id', 'title', 'year');
-        $query->addSelect('rating');
-        $query->limit(5);
+        //like
+        $query = DB::table('movies')
+            ->select('movies.title','movies.rating')
+            ->where('title', 'like', 'The%')
+            ->limit(5);
         $movies = $query->get();
 
-        $result['add_select']['title'] = 'Add a movie to selection';
-        $result['add_select']['sql'] = $query->toSql();
-        $result['add_select']['type'] = get_debug_type($movies);
-        $result['add_select']['data'] = $movies;
+        $result['like']['title'] = 'Get movies with title contains \'The\'';
+        $result['like']['sql'] = $query->toSql();
+        $result['like']['type'] = get_debug_type($movies);
+        $result['like']['data'] = $movies;
 
+        //array of conditions
+        $query = DB::table('movies')
+            ->select('movies.title','movies.rating')
+            ->where([
+                ['title','like','%father%'],
+                ['rating','>=','8']
+            ])
+            ->limit(5);
+        $movies = $query->get();
 
-        return ['title' => 'Select', 'method' => 'getSelect()', 'result' => $result];
+        $result['like_and_conditions']['title'] = 'Get movies with title contains \'father\' and granter than 8';
+        $result['like_and_conditions']['sql'] = $query->toSql();
+        $result['like_and_conditions']['type'] = get_debug_type($movies);
+        $result['like_and_conditions']['date'] = $movies;
+
+        return ['title' => 'Where Clauses', 'method' => 'getWhereClauses()', 'result' => $result];
     }
 
 
