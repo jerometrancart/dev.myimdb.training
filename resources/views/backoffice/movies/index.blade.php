@@ -9,6 +9,9 @@
 @section('content')
 
 @section('main_title', 'List of movies')
+
+@include('backoffice.movies.partials._search_form')
+
 <table class="table table-striped table-sm">
     <thead>
     <tr>
