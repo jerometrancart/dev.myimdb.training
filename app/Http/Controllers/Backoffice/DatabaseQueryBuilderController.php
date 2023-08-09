@@ -101,7 +101,7 @@ class DatabaseQueryBuilderController extends Controller
         $result['insert']['data'] = $query->get();
 
         return ['title' => 'Joins', 'method' => 'getJoins()', 'result' => $result];
-    }
+    } 
 
 
 

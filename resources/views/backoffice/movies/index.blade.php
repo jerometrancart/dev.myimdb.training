@@ -12,37 +12,40 @@
 <table class="table table-striped table-sm">
     <thead>
     <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Year</th>
-        <th>Running time</th>
-        <th>Rating</th>
-        <th>Created at</th>
-        <th>Updated at</th>
+        <th>{!! sortByColumn('id', 'Id', $input) !!}</th>
+        <th>{!! sortByColumn('title', 'Title', $input) !!}</th>
+        <th>{!! sortByColumn('year', 'Year', $input) !!}</th>
+        <th>{!! sortByColumn('running_time', 'Running Time', $input) !!}</th>
+        <th>{!! sortByColumn('rating', 'Rating', $input) !!}</th>
+        <th>{!! sortByColumn('created_at', 'Created At', $input) !!}</th>
+        <th>{!! sortByColumn('updated_at', 'Updated At', $input) !!}</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     @foreach( $movies as $movie )
         <tr>
-            <td>{{ $movie['id'] }}</td>
-            <td>{{ $movie['title'] }}</td>
-            <td>{{ $movie['year'] }}</td>
-            <td>{{ $movie['running_time'] }}</td>
-            <td>{{ $movie['rating'] }}</td>
-            <td>{{ $movie['created_at']->format('d/m/Y') }}</td>
-            <td>{{ $movie['updated_at']->format('d/m/Y') }}</td>
+            <td>{{ $movie->id }}</td>
+            <td>{{ $movie->title }}</td>
+            <td>{{ $movie->year }}</td>
+            <td>{{ $movie->running_time }}</td>
+            <td>{{ $movie->rating }}</td>
+            <td>{{ $movie->created_at }}</td>
+            <td>{{ $movie->updated_at }}</td>
             <td>
                 <ul class="list-inline list-unstyled">
-                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.show', ['id' =>$movie['id']]) }}">Show</a></li>
-                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.edit', ['id' =>$movie['id']]) }}">Edit</a></li>
-                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.delete', ['id' =>$movie['id']]) }}">Delete</a></li>
+                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.show', ['id' => $movie->id]) }}">Show</a></li>
+                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.edit', ['id' => $movie->id]) }}">Edit</a></li>
+                    <li class="list-inline-item"><a href="{{ route('backoffice.movies.delete', ['id' => $movie->id]) }}">Delete</a></li>
                 </ul>
             </td>
         </tr>
     @endforeach
     </tbody>
 </table>
+
+
+{{ $movies->links() }}
 <ul class="list-inline list-unstyled">
     <a href="{{ route('backoffice.movies.create') }}" class="btn btn-primary btn-sm">Add</a>
 </ul>

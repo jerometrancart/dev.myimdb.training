@@ -6,18 +6,21 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
-    public function index()
+    public function index(Request $request )
     {
-        //store movies list in array
+        $input = $request->all();
 
-        $movies = $this->getMovies();
+        //store movies list in collection
+        $input = ( !isset($input['sort_by']) ) ? array_merge(['sort_by' => 'title', 'sort_dir' => 'asc'], $input) : $input;
+        $movies = $this->getMovies($input);
 
-        //call view 'index' and transmit movies to view
+        //call view 'backoffice.movies.index' and transmit movies to view
         return view( 'backoffice.movies.index',
-            compact('movies' ));
+            compact('movies', 'input'));
     }
 
     public function show($id)
@@ -47,53 +50,21 @@ class MovieController extends Controller
             compact('movie'));
 
     }
-    public function getMovies()
+    public function getMovies($params = array())
     {
-        //store movies list in array
-        $datetime = new \Datetime();
+        $query = DB::table('movies')
+            ->select('id', 'title', 'year', 'running_time', 'rating', 'created_at', 'updated_at');
 
-        $movies = [
-            [
-                'id' => 1,
-                'title' => 'Halloween',
-                'year'=> 1978,
-                'running_time' => 120,
-                'rating' => 7.7,
-                'synopsis' => "Fifteen years after murdering his sister on Halloween night 1963, Michael Myers escapes from a mental hospital and returns to the small town of Haddonfield, Illinois to kill again.",
-                'created_at' => $datetime,
-                'updated_at' => $datetime
-            ],
-            [
-                'id' => 2,
-                'title' => 'Jaw',
-                'year'=> 1975,
-                'running_time' => 124,
-                'rating' => 8.0,
-                'synopsis' => "When a killer shark unleashes chaos on a beach community off Cape Cod, it's up to a local sheriff, a marine biologist, and an old seafarer to hunt the beast ...",
-                'created_at' => $datetime,
-                'updated_at' => $datetime
-            ],
-            [
-                'id' => 3,
-                'title' => 'The Godfather',
-                'year'=> 1972,
-                'running_time' => 175,
-                'rating' => 9.2,
-                'synopsis' => "Don Vito Corleone, head of a mafia family, decides to hand over his empire to his youngest son Michael. However, his decision unintentionally puts the lives of his loved ones in grave danger.",
-                'created_at' => $datetime,
-                'updated_at' => $datetime
-            ],
-            [
-                'id' => 4,
-                'title' => 'Serpico',
-                'year'=> 1973,
-                'running_time' => 140,
-                'rating' => 7.7,
-                'synopsis' => "An honest New York cop named Frank Serpico blows the whistle on rampant corruption in the force only to have his comrades turn against him.",
-                'created_at' => $datetime,
-                'updated_at' => $datetime
-            ]
-        ];
+        //sort by
+        if(isset($params['sort_by']) && !empty($params['sort_by'])
+            && isset($params['sort_dir']) && !empty($params['sort_dir']))
+        {
+            $sort_by = $params['sort_by'];
+            $sort_dir = $params['sort_dir'];
+        }
+        $query->orderBy($sort_by, $sort_dir);
+
+        $movies = $query->paginate(10)->withQueryString();
 
         return $movies;
 
