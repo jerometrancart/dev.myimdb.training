@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
+use App\Models\Movie;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
@@ -76,32 +77,16 @@ class DatabaseQueryBuilderController extends Controller
      */
     public function getGenericQuery()
     {
-        //insert
+        $result = [];
 
-        $created_at = new \DateTime();
-        $created_at = $created_at->format('Y-m-d H:i:s');
+        //get all the movies
+        $query = Movie::where('rating', '>=', 8)
+            ->orderBy('title');
 
-        DB::table('movies')->where('title', '=', 'Enter the Dragon')->delete();
-        DB::table('movies')->insert(
-            [
-                'title' => 'Enter the Dragon',
-                'year' => 1973,
-                'running_time' => 102,
-                'rating' => 7.7,
-                'synopsis' => 'A martial artist agrees to spy on a reclusive crime lord using his invitation to a tournament',
-                'created_at' => $created_at
-            ]);
+        $movies = $query->get();
 
-        $query = DB::table('movies')
-            ->select('id', 'title', 'rating', 'created_at')
-            ->orderBy('id', 'desc')
-            ->limit(1);
-
-        $result['insert']['title'] = 'Insert Movie : Enter the Dragon (1973)';
-        $result['insert']['data'] = $query->get();
-
-        return ['title' => 'Joins', 'method' => 'getJoins()', 'result' => $result];
-    } 
+        return ['title' => 'Get all Movies rating >= 8', 'result' => $movies];
+    }
 
 
 
