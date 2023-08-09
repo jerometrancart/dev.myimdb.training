@@ -47,8 +47,19 @@
     </tbody>
 </table>
 
+<div class="row justify-content-start mb-2">
+    <div class="col-4">
+        @if( $movies->total() )
+            Showing {{ $movies->firstItem() }} to {{ $movies->lastItem() }} of {{ $movies->total() }} entries
+        @else
+            No entry
+        @endif
+    </div>
+    <div class="col-4">
+        {{ $movies->links() }}
+    </div>
+</div>
 
-{{ $movies->links() }}
 <ul class="list-inline list-unstyled">
     <a href="{{ route('backoffice.movies.create') }}" class="btn btn-primary btn-sm">Add</a>
 </ul>

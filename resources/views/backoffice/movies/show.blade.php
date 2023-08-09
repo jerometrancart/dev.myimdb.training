@@ -1,6 +1,6 @@
 @extends('backoffice.layouts.master')
 
-@section('title', 'Show a movie | '.$movie['title']. ' | '. $movie['year'])
+@section('title', 'Show a movie | '.$movie->title. ' | '. $movie->year)
 
 @section('sidebar')
     @parent
@@ -8,49 +8,49 @@
 
 @section('content')
 
-@section('main_title', 'Show a movie : '.$movie['title'].' ('.$movie['year'].') ')
+@section('main_title', 'Show a movie : '.$movie->title.' ('.$movie->year.') ')
 
 <table class="table table-bordered table-sm">
     <tbody>
     <tr>
         <th class="w-25">Id</th>
-        <td>{{ $movie['id'] }}</td>
+        <td>{{ $movie->id }}</td>
     </tr>
     <tr>
         <th class="w-25">Title</th>
-        <td>{{ $movie['title'] }}</td>
+        <td>{{ $movie->title }}</td>
     </tr>
     <tr>
         <th class="w-25">Year</th>
-        <td>{{ $movie['year'] }}</td>
+        <td>{{ $movie->year }}</td>
     </tr>
     <tr>
         <th class="w-25">Synopsis</th>
-        <td>{{ $movie['synopsis'] }}</td>
+        <td>{{ $movie->synopsis }}</td>
     </tr>
     <tr>
         <th class="w-25">Running time</th>
-        <td>{{ $movie['running_time'] }}</td>
+        <td>{{ $movie->running_time }}</td>
     </tr>
     <tr>
         <th class="w-25">Rating</th>
-        <td>{{ $movie['rating'] }}</td>
+        <td>{{ $movie->rating }}</td>
     </tr>
     <tr>
         <th class="w-25">Created at</th>
-        <td>{{ $movie['created_at']->format('d/m/Y') }}</td>
+        <td>{{ $movie->created_at }}</td>
     </tr>
     <tr>
         <th class="w-25">Updated at</th>
-        <td>{{ $movie['updated_at']->format('d/m/Y') }}</td>
+        <td>{{ $movie->updated_at }}</td>
     </tr>
     </tbody>
 
 </table>
 
 <ul class="list-inline list-unstyled mt-5">
-    <a href="{{ route('backoffice.movies.edit', ['id' =>$movie['id']]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
-    <a href="{{ route('backoffice.movies.delete', ['id' =>$movie['id']]) }}" class="btn btn-outline-secondary btn-sm">Delete</a>
+    <a href="{{ route('backoffice.movies.edit', ['id' =>$movie->id ]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
+    <a href="{{ route('backoffice.movies.delete', ['id' =>$movie->id ]) }}" class="btn btn-outline-secondary btn-sm">Delete</a>
     <a href="{{ route('backoffice.movies.index') }}" class="btn btn-outline-secondary btn-sm ">Back to list</a>
 </ul>
 

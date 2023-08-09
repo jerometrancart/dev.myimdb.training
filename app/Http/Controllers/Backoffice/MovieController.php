@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class MovieController extends Controller
 {
@@ -38,6 +39,30 @@ class MovieController extends Controller
 
         return view('backoffice.movies.edit',
         compact('movie'));
+    }
+
+    public function update($id, Request $request)
+    {
+        //get the movie based on id
+        $movie = $this-> getMovie($id);
+
+        $input = $request->only([
+            'title',
+            'year',
+            'running_time',
+            'synopsis',
+            'rating'
+        ]);
+
+        $input['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
+
+        //update in db
+        DB::table('movies')
+            ->where('id', '=', $movie->id)
+            ->update($input);
+
+        //redirect to action edit
+        return Redirect::route('backoffice.movies.index');
     }
     public function create()
     {
@@ -132,17 +157,9 @@ class MovieController extends Controller
     }
     private function getMovie($id)
     {
-        $movies = $this->getMovies();
+        $movie = DB::table('movies')->find($id);
 
-        foreach ($movies as $movie)
-        {
-            if ($movie['id'] == $id)
-            {
-                return $movie;
-            }
-        }
-
-        return null;
+        return $movie;
     }
 
 
