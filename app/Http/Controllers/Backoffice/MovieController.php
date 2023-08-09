@@ -15,8 +15,6 @@ class MovieController extends Controller
     {
         $input = $request->all();
 
-
-
         //store movies list in collection
         $input = ( !isset($input['sort_by']) ) ? array_merge(['sort_by' => 'id', 'sort_dir' => 'asc'], $input) : $input;
         $movies = $this->getMovies($input);
@@ -69,6 +67,28 @@ class MovieController extends Controller
         return view('backoffice.movies.create');
     }
 
+    public function store(Request $request)
+    {
+        //get data from form
+        $input = $request->only([
+            'title',
+            'year',
+            'running_time',
+            'synopsis',
+            'rating'
+        ]);
+
+        //created_at
+        $input['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
+
+        //insert movie
+        DB::table('movies')
+            ->insert($input);
+
+        // redirect to action index
+        return Redirect::route('backoffice.movies.index', ['sort by' => 'id', 'sort dir' => 'desc']);
+    }
+
     public function delete($id)
     {
         $movie = $this->getMovie($id);
@@ -77,6 +97,19 @@ class MovieController extends Controller
             compact('movie'));
 
     }
+
+    public function destroy($id)
+    {
+        //get the movie
+        $movie = DB::table('movies')->find($id);
+
+        //delete the movie
+        DB::table('movies')->delete($movie->id);
+
+        //redirect to movies list
+        return redirect(route('backoffice.movies.index'));
+    }
+
     public function getMovies($params = array())
     {
         $query = DB::table('movies')

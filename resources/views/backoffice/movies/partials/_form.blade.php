@@ -1,4 +1,6 @@
-<form method="post" action="{{ route('backoffice.movies.update', ['id' => $movie->id ]) }}">
+<form method="post" action="{{(isset($movie) && $movie->id) ?
+                                route('backoffice.movies.update', ['id' => $movie->id ]) :
+                                route('backoffice.movies.store') }}">
     @csrf
     <div class="mb-3">
         <label for="title" class="form-label fw-bold fs-6">Title</label>
@@ -17,7 +19,7 @@
         <input type="text" class="form-control" name="rating" value="{{ (isset($movie))? $movie->rating : '' }}">
     </div>
     <div class="mb-3">
-        <label for="running_time" class="form-label fw-bold fs-6">Rating</label>
+        <label for="running_time" class="form-label fw-bold fs-6">Running Time</label>
         <input type="text" class="form-control" name="running_time" value="{{ (isset($movie))? $movie->running_time : '' }}">
     </div>
     @if (isset($movie))
